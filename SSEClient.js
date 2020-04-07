@@ -22,7 +22,7 @@ function SSEClient(url, event) {
         //warning: data passes clearly in the request!
         this.withCreds = function (user, password, id) {
             var xhr = new XMLHttpRequest();
-            xhr.open("POST", this.url + "/creds_login", true);
+            xhr.open("POST", this.url + "/login", true);
             xhr.withCredentials = true;
             xhr.setRequestHeader('Content-type', 'application/json');
 
