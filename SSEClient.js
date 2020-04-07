@@ -1,3 +1,5 @@
+<script>
+	
 /**
  *
  * @param url
@@ -48,3 +50,5 @@ function SSEClient(url, event, user, password, id) {
 		}, false);
 	};
 };
+
+</script>
