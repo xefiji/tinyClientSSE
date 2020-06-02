@@ -52,18 +52,21 @@ function SSEClient(url, event) {
             data.token = token;
             data.id = id;
             var encoded = btoa(JSON.stringify(data));
-            //set cookie
-            document.cookie = "sse_token=" + encoded;
+            
             //callrun
-            this.run(this.url, this.event, this.callback);
+            this.run(this.url, this.event, this.callback, encoded);
         };
 
-        //after logged in (hence cookie set), instanciate an EventStream object
-        this.run = function (url, eventType, callback) {            
-            const evtSource = new EventSource(url + "/events?type=" + eventType, { withCredentials: true });        
-            evtSource.onmessage = function (event) {
-                callback(event)
-            };
+        //after logged in, instanciate an EventStream object
+        this.run = function (url, eventType, callback, token) {
+            var finalUrl = url + "/events?type=" + eventType;
+            if (token) {
+	        finalUrl += "&token=" + token;
+	    }
+	    const evtSource = new EventSource(finalUrl, {withCredentials: true});
+	    evtSource.onmessage = function (event) {
+	        callback(event)
+	    };
         };
 
     };
