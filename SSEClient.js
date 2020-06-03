@@ -13,6 +13,7 @@ function SSEClient(url, event) {
 
         this.url = url;
         this.event = event;
+	this.es;
 
         // the handler function that will be called  to do something with the event
         this.setCallback = function (callback) {
@@ -64,9 +65,10 @@ function SSEClient(url, event) {
 	        finalUrl += "&token=" + token;
 	    }
 	    const evtSource = new EventSource(finalUrl, {withCredentials: true});
-	    evtSource.onmessage = function (event) {
+	    evtSource.onmessage = function (event) { //this will be called by default if no event type is set
 	        callback(event)
 	    };
+	    this.es = evtSource; //if you need to add listeners to specific event type
         };
 
     };
